@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: ${JPA_SHOW_SQL:false}
+    properties:
+      hibernate:
+        format_sql: true
+
+
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+  servlet:
+    context-path: /api
+  cors:
+    allowed-origins: ${CORS_ORIGINS:*}
+
+logging:
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET}
+    expiration-time: ${JWT_EXPIRATION_MS:3600000}
