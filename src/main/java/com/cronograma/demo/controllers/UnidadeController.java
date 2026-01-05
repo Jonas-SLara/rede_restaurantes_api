@@ -31,4 +31,5 @@ public class UnidadeController {
     public ResponseEntity<?> getAllUnidades() {
         return ResponseEntity.ok().body(getService.execute());
     }
+    
 }
