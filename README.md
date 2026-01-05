@@ -1,5 +1,7 @@
 # Rede Restaurantes API
 
+![imagem](./docs/diagrama_classes.png)
+
 ```bash
 cp .env.example .env
 ```

@@ -11,12 +11,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+  web:
+    error:
+      include-message: always
+      include-stacktrace: never
 
 server:
   port: ${PORT:5001}
-  error:
-    include-message: always
   servlet:
     context-path: /api
   cors:
@@ -27,8 +28,8 @@ logging:
     console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
 
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.SQL: OFF
+    org.hibernate.orm.jdbc.bind: OFF
 
 security:
   jwt:
