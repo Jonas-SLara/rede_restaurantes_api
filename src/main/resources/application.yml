@@ -1,12 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}/${POSTGRES_DB}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/rede_restaurantes}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:1234}
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: ${JPA_SHOW_SQL:false}
     properties:
       hibernate:
@@ -14,13 +14,13 @@ spring:
 
 
 server:
-  port: ${PORT:8080}
+  port: ${PORT:5001}
   error:
     include-message: always
   servlet:
     context-path: /api
   cors:
-    allowed-origins: ${CORS_ORIGINS:*}
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5000}
 
 logging:
   pattern:
@@ -32,5 +32,5 @@ logging:
 
 security:
   jwt:
-    secret-key: ${JWT_SECRET}
+    secret-key: ${JWT_SECRET:CC6rCcdNxk3yvTM+QEH5ISx52iMKEZB7Qi7ptpjP3ws24cdQhMwthZpKEhNiiF7MpIYxiWkZwnEg3kuWftHoiw==}
     expiration-time: ${JWT_EXPIRATION_MS:3600000}

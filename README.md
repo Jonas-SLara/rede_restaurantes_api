@@ -1,9 +1,19 @@
-# cronograma_api
-api geral para cronograma de eventos e atividades para o front
+# Rede Restaurantes API
 
 ```bash
 cp .env.example .env
-export $(grep -v '^#' .env | xargs)
+```
+
+modificar suas variaveis de ambiente se nescessario para produção!
+
+
+gerar a chave para o secret
+```bash
+openssl rand -base64 64
+```
+
+```bash
+docker compose up -d
 ```
 
 caso nao tenha o wrapper do mvn, executar comando, com o mvn instalado (opcional)
