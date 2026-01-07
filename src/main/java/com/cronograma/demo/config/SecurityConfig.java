@@ -53,7 +53,11 @@ public class SecurityConfig {
     //manager de autenticacao
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config){
-        return config.getAuthenticationManager();
+        try {
+            return config.getAuthenticationManager();
+        } catch (Exception e) {
+            throw new RuntimeException("erro nao tratado");
+        }
     }
 
     //config do cors
@@ -99,7 +103,14 @@ public class SecurityConfig {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
         .authorizeHttpRequests(auth -> 
-            auth.requestMatchers("/auth/**", "/error").permitAll()
+            auth.requestMatchers(
+                "/auth/**",
+                "/error",
+                "/swagger-ui.html",
+                "/swagger-ui/**",
+                "/v3/api-docs",
+                "/v3/api-docs/**"
+            ).permitAll()
             .anyRequest().authenticated()
         )
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

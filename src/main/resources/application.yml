@@ -22,11 +22,6 @@ server:
     context-path: /api
   cors:
     allowed-origins: ${CORS_ORIGINS:http://localhost:5000}
-
-logging:
-  pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
-
   level:
     org.hibernate.SQL: OFF
     org.hibernate.orm.jdbc.bind: OFF
