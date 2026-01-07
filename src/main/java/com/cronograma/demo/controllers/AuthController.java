@@ -13,9 +13,16 @@ import com.cronograma.demo.dto.response.UserResponseDTO;
 import com.cronograma.demo.service.users.AuthService;
 import com.cronograma.demo.service.users.RegisterUserService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@Tag(
+    name = "operações relacionadas a autenticação do usuario",
+    description = "fazer login e registrar na plataforma"
+)
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -24,6 +31,9 @@ public class AuthController {
     private final AuthService authService;
     private final RegisterUserService registerService;
 
+    @Operation(
+        summary = "fazer login na plataforma, receber token"
+    )
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(
             @RequestBody @Valid LoginRequestDTO dto) {
@@ -31,6 +41,10 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(dto));
     }
 
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(
+        summary = "Se registrar na plataforma"
+    )
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(
             @RequestBody @Valid UserRequestDTO dto) {

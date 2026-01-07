@@ -19,17 +19,28 @@ import com.cronograma.demo.service.me.DeletMeUnidadeService;
 import com.cronograma.demo.service.me.MeUnidadesServices;
 import com.cronograma.demo.service.me.RegisterMeUnidadeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/me")
 @RequiredArgsConstructor
+@Tag(
+    name = "operações ralacionadas ao usuario autenticado",
+    description = "usuario autenticado com token"
+)
 public class MeController {
 
     private final RegisterMeUnidadeService registerMeUnidadeService;
     private final MeUnidadesServices meUnidadesServices;
     private final DeletMeUnidadeService deletMeUnidadeService;
 
+    @Operation(
+        summary = "ver informações do usuario que esta autenticado"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping
     public ResponseEntity<UserResponseDTO> me(
         @AuthenticationPrincipal UserDetailsAdapter user){
@@ -39,7 +50,8 @@ public class MeController {
         );
     }
 
-    //pegar o usuario atual, salvo no contexto e associa a uma unidade
+    @Operation(summary = "associar uma unidade ao usuario autenticado")
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/register")
     public ResponseEntity<?> registerMe(
             @RequestParam Long idUnidade,
@@ -49,8 +61,8 @@ public class MeController {
         return ResponseEntity.noContent().build();
     }
 
-    //listar todas as unidades do usuario logado
-
+    @Operation(summary = "listar as unidades do usuario que está autenticado")
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/unidades")
     public ResponseEntity<?> getMyUnidades(
             @AuthenticationPrincipal UserDetailsAdapter user) {
@@ -58,6 +70,8 @@ public class MeController {
         return ResponseEntity.ok().body(unidadeResponses);
     }
     
+    @Operation(summary = "deletar uma unididade a que o usuario logado pertence")
+    @SecurityRequirement(name = "bearerAuth")
     @DeleteMapping("/unidades")
     public ResponseEntity<?> deleteMyUnidade(
             @AuthenticationPrincipal UserDetailsAdapter user,
